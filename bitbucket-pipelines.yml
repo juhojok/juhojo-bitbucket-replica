@@ -12,8 +12,9 @@ pipelines:
           name: 'Clone and push'
           script:
             - echo "Creating a local mirror of the Bitbucket repository"
-            # - git clone --mirror ${BITBUCKET_URL} repo-mirror
-            
-            - echo "Syncing the Bitbucket repository with GitHub"
-            - 
+            - git clone --mirror $BITBUCKET_URL repo-mirror
+            - echo "Syncing the Bitbucket repository with GitHub using GitHub access token"
             - echo "The token will expire on Sat, Oct 15 2022"
+            - cd repo-mirror
+            - git push --mirror $GITHUB_URL 
+            - git push https://$GITHUB_TOKEN@github.com/$GITHUB_USERNAME/$GITHUB_REPOSITORY_NAME.git
